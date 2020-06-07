@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'screens/home.dart';
+
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
@@ -10,6 +12,6 @@ void main() {
 class WorldTime extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Home();
   }
 }
