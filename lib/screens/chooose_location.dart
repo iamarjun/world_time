@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:worldtime/model/Location.dart';
+import 'package:worldtime/model/WorldTime.dart';
 import 'package:worldtime/service/api.dart';
 
 class ChooseLocation extends StatefulWidget {
@@ -11,10 +12,9 @@ class ChooseLocation extends StatefulWidget {
 class _ChooseLocationState extends State<ChooseLocation> {
   API api = new API();
 
-  @override
-  void initState() {
-    super.initState();
-    print(api.getLocations());
+  void updateTime(String endPoint) async {
+    WorldTime worldTime = await api.getTime(endPoint);
+    Navigator.pop(context, {'world time': worldTime});
   }
 
   @override
@@ -29,23 +29,24 @@ class _ChooseLocationState extends State<ChooseLocation> {
         body: FutureBuilder<Location>(
           future: api.getLocations(),
           builder: (BuildContext context, AsyncSnapshot<Location> snapshot) {
-            if(snapshot.hasError)
-              print(snapshot.error);
-
-            var locations = snapshot.data.locations;
-
-            return snapshot.hasData ? ListView.builder(
-                itemCount: locations.length,
-                itemBuilder: (context, index) => Card(
-                  elevation: 4,
-                  margin: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
-                  child: ListTile(
-                    title: Text(locations[index]),
-                  ),
-                )): Center(child: SpinKitCubeGrid(
-              color: Colors.amber[900],
-              size: 50,
-            ));
+            if (snapshot.hasError) print(snapshot.error);
+            return snapshot.hasData
+                ? ListView.builder(
+                    itemCount: snapshot.data.locations.length,
+                    itemBuilder: (context, index) => Card(
+                          elevation: 4,
+                          margin: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
+                          child: ListTile(
+                            onTap: () =>
+                                this.updateTime(snapshot.data.locations[index]),
+                            title: Text(snapshot.data.locations[index]),
+                          ),
+                        ))
+                : Center(
+                    child: SpinKitPulse(
+                    color: Colors.amber[900],
+                    size: 50,
+                  ));
           },
         ));
   }

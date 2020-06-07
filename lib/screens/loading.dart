@@ -19,7 +19,7 @@ class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green[500],
+      backgroundColor: Colors.amber[900],
         body: FutureBuilder<WorldTime>(
       future: api.getTime('Asia/Kolkata').then((value) {
         print(value);

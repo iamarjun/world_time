@@ -8,11 +8,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  Map data;
+  Map data = {};
 
   @override
   Widget build(BuildContext context) {
-    data = ModalRoute.of(context).settings.arguments;
+    data = data != null && data.isNotEmpty
+        ? data
+        : ModalRoute.of(context).settings.arguments;
 
     WorldTime worldTime = data['world time'];
     var time = DateFormat.jm().format(DateTime.parse(worldTime.datetime));
@@ -26,7 +28,12 @@ class _HomeState extends State<Home> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               FlatButton.icon(
-                onPressed: () => Navigator.pushNamed(context, '/location'),
+                onPressed: () async {
+                  var data = await Navigator.pushNamed(context, '/location');
+                  setState(() {
+                    this.data = data;
+                  });
+                },
                 icon: Icon(
                   Icons.edit_location,
                 ),
