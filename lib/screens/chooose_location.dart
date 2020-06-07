@@ -9,7 +9,9 @@ class _ChooseLocationState extends State<ChooseLocation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text("Choose Location"),
+      body: Center(
+        child: Text("Choose Location"),
+      ),
     );
   }
 }
