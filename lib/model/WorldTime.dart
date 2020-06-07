@@ -1,7 +1,3 @@
-import 'dart:convert';
-
-import 'package:http/http.dart';
-
 class WorldTime {
   String abbreviation;
   String client_ip;
@@ -56,12 +52,5 @@ class WorldTime {
     data['utc_offset'] = utc_offset;
     data['week_number'] = week_number;
     return data;
-  }
-
-  Future<WorldTime> getTime(String endPoint) async {
-    Response response =
-        await get('http://worldtimeapi.org/api/timezone/$endPoint');
-
-    return WorldTime.fromJsonMap(jsonDecode(response.body));
   }
 }

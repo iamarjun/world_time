@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:worldtime/service/WorldTime.dart';
+import 'package:worldtime/model/WorldTime.dart';
 
 class Home extends StatefulWidget {
   @override

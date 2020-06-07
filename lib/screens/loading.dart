@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:worldtime/service/WorldTime.dart';
+import 'package:worldtime/model/WorldTime.dart';
+import 'package:worldtime/service/api.dart';
 
 class Loading extends StatefulWidget {
   @override
@@ -8,7 +9,7 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-  WorldTime worldTime = WorldTime();
+  API api = API();
 
   @override
   void initState() {
@@ -20,7 +21,7 @@ class _LoadingState extends State<Loading> {
     return Scaffold(
       backgroundColor: Colors.green[500],
         body: FutureBuilder<WorldTime>(
-      future: worldTime.getTime('Asia/Kolkata').then((value) {
+      future: api.getTime('Asia/Kolkata').then((value) {
         print(value);
         Navigator.pushReplacementNamed(context, '/home', arguments: {
           'world time': value,
