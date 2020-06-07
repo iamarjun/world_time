@@ -1,7 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+import 'package:worldtime/service/WorldTime.dart';
 
 class Loading extends StatefulWidget {
   @override
@@ -9,7 +7,7 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-
+  WorldTime worldTime = WorldTime();
 
   @override
   void initState() {
@@ -19,9 +17,21 @@ class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text('Loading'),
-      ),
-    );
+        body: FutureBuilder<WorldTime>(
+      future: worldTime.getTime('Asia/Kolkata').then((value) {
+        print(value);
+        Navigator.pushReplacementNamed(context, '/home', arguments: {
+          'world time': value,
+        });
+        return value;
+      }),
+      builder: (BuildContext context, AsyncSnapshot<WorldTime> snapshot) {
+        if (snapshot.hasError) print(snapshot.error);
+
+        return snapshot.hasData
+            ? Container()
+            : Center(child: CircularProgressIndicator());
+      },
+    ));
   }
 }

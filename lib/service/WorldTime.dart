@@ -3,9 +3,6 @@ import 'dart:convert';
 import 'package:http/http.dart';
 
 class WorldTime {
-  String location;
-  String endPoint;
-
   String abbreviation;
   String client_ip;
   String datetime;
@@ -22,7 +19,7 @@ class WorldTime {
   String utc_offset;
   int week_number;
 
-  WorldTime({this.location, this.endPoint})
+  WorldTime();
 
   WorldTime.fromJsonMap(Map<String, dynamic> map)
       : abbreviation = map["abbreviation"],
@@ -61,7 +58,7 @@ class WorldTime {
     return data;
   }
 
-  Future<WorldTime> getTime() async {
+  Future<WorldTime> getTime(String endPoint) async {
     Response response =
         await get('http://worldtimeapi.org/api/timezone/$endPoint');
 

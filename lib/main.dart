@@ -14,10 +14,3 @@ void main() {
     },
   ));
 }
-
-class WorldTime extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Home();
-  }
-}
