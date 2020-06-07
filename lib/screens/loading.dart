@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:worldtime/service/WorldTime.dart';
 
 class Loading extends StatefulWidget {
@@ -17,6 +18,7 @@ class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.green[500],
         body: FutureBuilder<WorldTime>(
       future: worldTime.getTime('Asia/Kolkata').then((value) {
         print(value);
@@ -30,7 +32,10 @@ class _LoadingState extends State<Loading> {
 
         return snapshot.hasData
             ? Container()
-            : Center(child: CircularProgressIndicator());
+            : Center(child: SpinKitWave(
+          color: Colors.white,
+          size: 50,
+        ));
       },
     ));
   }
